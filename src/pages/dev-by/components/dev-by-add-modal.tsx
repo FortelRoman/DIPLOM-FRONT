@@ -1,4 +1,4 @@
-import {DatePicker, message, Modal, Typography, Upload, UploadFile, UploadProps} from "antd";
+import {DatePicker, Modal, notification, Typography, Upload, UploadFile, UploadProps} from "antd";
 import Dragger from "antd/es/upload/Dragger";
 import React, {FC, useState} from "react";
 import {DevByActions} from "../../../store/dev-by";
@@ -32,9 +32,15 @@ export const DevByAddModal: FC<Props> = ({isModalOpen, handleOk, handleCancel}) 
                await dispatch(DevByActions.addItem(
                     {date: data.date?.format(('YYYY-MM-DD')) || '', file: result}));
                 setData({date: null, file: null});
-                message.success('upload successfully');
+                notification.open({
+                    type: "success",
+                    message: 'Запись добавлена успешно',
+                });
             } catch (e) {
-                message.error('upload failed.');
+                notification.open({
+                    type: "error",
+                    message: 'Ошибка добавления записи',
+                });
             } finally {
                 await dispatch(DevByActions.getItems())
             }
@@ -61,7 +67,10 @@ export const DevByAddModal: FC<Props> = ({isModalOpen, handleOk, handleCancel}) 
                 setData(prev => ({...prev, file: file}));
                 return false;
             } else {
-                message.error(`${file.name} не является JSON файлом`);
+                notification.open({
+                    type: "error",
+                    message: `${file.name} не является JSON файлом`,
+                });
                 return Upload.LIST_IGNORE;
             }
         },

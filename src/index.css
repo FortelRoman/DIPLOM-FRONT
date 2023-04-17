@@ -123,3 +123,7 @@ code {
 .content {
   width: 100%;
 }
+
+.ant-notification button {
+  padding: 0;
+}

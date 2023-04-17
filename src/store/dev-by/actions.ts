@@ -23,8 +23,6 @@ type TAdd = {date?: string, file?: Object};
 
 export const addItem = createAsyncThunk('dev-by/add-item', async ({date, file} : TAdd, thunkAPI) => {
 	try {
-		console.log('date', date);
-		console.log('file', file);
 		const response = await $api.post(`/api/dev-by`, {file, date},  {headers: {'Content-type': 'application/json'}});
 		return response.data;
 	} catch (error) {
@@ -35,6 +33,15 @@ export const addItem = createAsyncThunk('dev-by/add-item', async ({date, file} :
 export const getItem = createAsyncThunk('dev-by/get-item', async (id: string, thunkAPI) => {
 	try {
 		const response = await $api.get(`/api/dev-by/${id}`);
+		return response.data;
+	} catch (error) {
+		return thunkAPI.rejectWithValue(error);
+	}
+});
+
+export const parseItem = createAsyncThunk('dev-by/parse-item', async (_, thunkAPI) => {
+	try {
+		const response = await $api.get('api/dev-by/parse');
 		return response.data;
 	} catch (error) {
 		return thunkAPI.rejectWithValue(error);

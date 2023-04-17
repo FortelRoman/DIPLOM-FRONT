@@ -1,62 +1,77 @@
-import React, {FC, useState} from 'react';
+import React, {useState} from 'react';
 import {
     Button,
-    message,
     notification,
     Typography,
 } from "antd";
 import { UploadOutlined, DeleteOutlined, DownloadOutlined, SaveOutlined, PlayCircleFilled } from '@ant-design/icons';
-import {DevByActions} from "../../../store/dev-by";
-import {useAppDispatch} from "../../../store/hooks";
+import {DevByActions, DevBySelectors} from "../../../store/dev-by";
+import {useAppDispatch, useAppSelector} from "../../../store/hooks";
 import {DevByAddModal} from "./dev-by-add-modal";
 import {DevByPreview} from "./dev-by-preview";
 import {downloadFile} from "../helpers/download-file";
-import {TUploadData} from "../types/upload-date";
+import {useNavigate} from "react-router-dom";
 
 const {Title} = Typography;
 
-
-type Props = {
-    uploadData: TUploadData | null,
-    setUploadData:  React.Dispatch<React.SetStateAction<TUploadData | null>>,
-
-    uploadDataLoading: boolean,
-    setUploadDataLoading: React.Dispatch<React.SetStateAction<boolean>>,
-
-}
-
-
-export const DevByAdd: FC<Props> = ({uploadData, uploadDataLoading, setUploadDataLoading, setUploadData}) => {
+export const DevByAdd = () => {
     const dispatch = useAppDispatch();
-    const [api, contextHolder] = notification.useNotification();
+    const uploadData = useAppSelector(DevBySelectors.uploadData)
+    const uploadDataLoading = useAppSelector(DevBySelectors.uploadDataLoading)
+    const navigate = useNavigate();
 
 
     const onParse = async () => {
-        api.info({
-            message: 'Запущен скрипт получения данных',
-            description:
-                'Это может занять несколько минут',
-            duration: 0,
-        });
-        setUploadDataLoading(true)
-        const res = await fetch('http://localhost:4000/api/dev-by/parse')
-        const data1 = await res.json();
-        setUploadData(data1)
-        setUploadDataLoading(false)
-        api.destroy()
-        api.success({
-            message: 'Получение данных завершено',
-            description: 'Для записи данных в БД нажмите на кнопку СОХРАНИТЬ РЕЗУЛЬТАТ'
-        });
+        try {
+            notification.open({
+                type: 'info',
+                message: 'Запущен скрипт получения данных',
+                description:
+                    'Это может занять несколько минут',
+                duration: 0,
+                key: 'parse'
+            })
+            await dispatch(DevByActions.parseItem()).unwrap();
+            notification.open({
+                message: 'Получение данных завершено',
+                description: <><span>Для записи </span>
+                    {/*@ts-ignore*/}
+                    <Button type={'link'} onClick={() => navigate('/dev-by')}>данных</Button><span> в БД нажмите на кнопку СОХРАНИТЬ РЕЗУЛЬТАТ'</span></>,
+                type: 'success',
+                duration: 0,
+            });
+        } catch (e) {
+            console.log('catch')
+            notification.open({
+                message: 'Ошибка выполнения скрипта',
+                description: 'Попробуйте снова, если ошибка повторится обратитесь к администратору',
+                type: 'error',
+                duration: 0,
+            });
+        } finally {
+            notification.destroy('parse')
+        }
     }
 
 
     const onDelete = () => {
-        setUploadData(null)
+        notification.destroy('parse');
+        dispatch(DevByActions.resetUploadData())
     }
 
     const onDownload = () => {
-        downloadFile(JSON.stringify(uploadData?.vacancies), uploadData?.date ||'dev-by.json')
+        try {
+            downloadFile(JSON.stringify(uploadData?.vacancies), uploadData?.date ||'dev-by.json')
+            notification.open({
+                type: "success",
+                message: 'Скачивание выполненно успешно',
+            });
+        } catch (e) {
+            notification.open({
+                type: "error",
+                message: 'Ошибка скачивания записи',
+            });
+        }
     }
 
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -64,12 +79,19 @@ export const DevByAdd: FC<Props> = ({uploadData, uploadDataLoading, setUploadDat
     const saveResult = async () => {
         try {
             await dispatch(DevByActions.addItem(
-                {date: uploadData?.date, file: uploadData?.vacancies}));
-            message.success('save successfully');
+                {date: uploadData?.date, file: uploadData?.vacancies})).unwrap();
+            notification.destroy('parse');
+            notification.open({
+                type: 'success',
+                message: 'Запись сохранена успешно',
+            })
         } catch (e) {
-            message.success('save failed');
+            notification.open({
+                type: 'error',
+                message: 'Ошибка сохранения записи',
+            })
         } finally {
-            setUploadData(null)
+            dispatch(DevByActions.resetUploadData())
             await dispatch(DevByActions.getItems())
         }
     }
@@ -88,7 +110,6 @@ export const DevByAdd: FC<Props> = ({uploadData, uploadDataLoading, setUploadDat
 
     return (
         <div>
-            {contextHolder}
             <div className={'buttons__add'}>
                 <Button type="primary" onClick={onParse} loading={uploadDataLoading}
                         disabled={uploadDataLoading} icon={<PlayCircleFilled />}>Запустить скрипт</Button>

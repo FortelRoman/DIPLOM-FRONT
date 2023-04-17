@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {Button, message, Typography, Row, Col} from "antd";
+import {Button, Typography, Row, Col, notification} from "antd";
 import { DeleteOutlined, DownloadOutlined } from '@ant-design/icons';
 import {DevByActions} from "../../store/dev-by";
 import {useAppDispatch} from "../../store/hooks";
 import {DevByPreview} from "./components/dev-by-preview";
 import {downloadFile} from "./helpers/download-file";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 const {Title, Text} = Typography;
 
@@ -20,15 +20,23 @@ export const DevByItem = () => {
 
     const dispatch = useAppDispatch();
     const {id} = useParams();
+    const navigate = useNavigate();
 
     const [data, setData] = useState<DataType>()
 
     const onDelete = async () => {
         try {
-            id && await dispatch(DevByActions.deleteItem(id))
-            message.success('delete successfully');
+            id && await dispatch(DevByActions.deleteItem(id)).unwrap()
+            notification.open({
+                type: "success",
+                message: 'Запись удалена успешно',
+            });
+            navigate('/dev-by')
         } catch (e) {
-            message.success('delete failed');
+            notification.open({
+                type: "error",
+                message: 'Ошибка удаления записи',
+            });
         } finally {
             await dispatch(DevByActions.getItems())
         }
@@ -39,9 +47,16 @@ export const DevByItem = () => {
             if (id) {
                 const response = await dispatch(DevByActions.getItem(id))
                 downloadFile(JSON.stringify(response), 'dev-by.json')
+                notification.open({
+                    type: "success",
+                    message: 'Скачивание выполненно успешно',
+                });
             }
         } catch (e) {
-            message.success('delete failed');
+            notification.open({
+                type: "error",
+                message: 'Ошибка скачивания записи',
+            });
         }
     }
 
@@ -55,7 +70,7 @@ export const DevByItem = () => {
 
     useEffect(() => {
         id && getData(id)
-    }, [])
+    }, []) // eslint-disable-line
 
 
     return (

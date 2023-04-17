@@ -1,12 +1,11 @@
-import React, {useEffect, useState} from 'react';
-import {Button, message, Table, Typography} from "antd";
+import React, {useEffect} from 'react';
+import {Button, notification, Table, Typography} from "antd";
 import { DeleteOutlined, DownloadOutlined } from '@ant-design/icons';
 import {ColumnsType} from "antd/es/table";
 import {DevByActions, DevBySelectors} from "../../store/dev-by";
 import {useAppDispatch, useAppSelector} from "../../store/hooks";
 import DevByAdd from "./components/dev-by-add";
 import {downloadFile} from "./helpers/download-file";
-import {TUploadData} from "./types/upload-date";
 import {useNavigate} from "react-router-dom";
 
 const {Title} = Typography;
@@ -23,17 +22,22 @@ export const DevByList = () => {
     const navigate = useNavigate();
 
     const data = useAppSelector(DevBySelectors.data)
-    const [uploadData, setUploadData] = useState<TUploadData | null>(null);
-    const [uploadDataLoading, setUploadDataLoading] = useState(false);
+    const uploadData = useAppSelector(DevBySelectors.uploadData)
 
     const loading = useAppSelector(DevBySelectors.loading)
 
     const onDelete = async (id: string) => {
         try {
-            await dispatch(DevByActions.deleteItem(id))
-            message.success('delete successfully');
+            await dispatch(DevByActions.deleteItem(id)).unwrap()
+            notification.open({
+                type: "success",
+                message: 'Запись удалена успешно',
+            });
         } catch (e) {
-            message.success('delete failed');
+            notification.open({
+                type: "error",
+                message: 'Ошибка удаления записи',
+            });
         } finally {
             await dispatch(DevByActions.getItems())
         }
@@ -41,10 +45,17 @@ export const DevByList = () => {
 
     const onDownload = async (id: string) => {
         try {
-            const response = await dispatch(DevByActions.getItem(id))
-            downloadFile(JSON.stringify(response.payload.vacancies), 'dev-by.json')
+            const response = await dispatch(DevByActions.getItem(id)).unwrap()
+            downloadFile(JSON.stringify(response.vacancies), 'dev-by.json')
+            notification.open({
+                type: "success",
+                message: 'Скачивание выполненно успешно',
+            });
         } catch (e) {
-            message.success('delete failed');
+            notification.open({
+                type: "error",
+                message: 'Ошибка скачивания записи',
+            });
         }
     }
 
@@ -80,7 +91,7 @@ export const DevByList = () => {
 
     useEffect(() => {
         dispatch(DevByActions.getItems())
-    }, [])
+    }, []) // eslint-disable-line
 
 
     return (
@@ -88,7 +99,7 @@ export const DevByList = () => {
             <Title level={1}>Devby.io</Title>
             <div className={!uploadData ? 'page__content' : ''}>
                 <div>
-                    <DevByAdd uploadData={uploadData} uploadDataLoading={uploadDataLoading} setUploadData={setUploadData} setUploadDataLoading={setUploadDataLoading}/>
+                    <DevByAdd />
                 </div>
                 <div>
                     <Title level={3}>Данные</Title>
