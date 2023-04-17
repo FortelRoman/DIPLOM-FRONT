@@ -11,3 +11,115 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+ h1 {
+  margin-top: 0;
+}
+
+.field__label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.buttons__save {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.buttons__add {
+  margin-top: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.buttons__add .ant-btn {
+  height: 150px;
+  width: 150px;
+  display: flex;
+  flex-wrap: wrap;
+  white-space: normal;
+  justify-content: center;
+  align-items: center;
+}
+.buttons__add .ant-btn svg {
+  width: 40px;
+  height: 40px;
+}
+
+.page {
+  padding: 25px;
+  max-width: 1200px;
+}
+
+.page__content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 50px;
+}
+.page__content > div:first-child {
+  width: 150px;
+}
+.page__content > div:last-child {
+  width: calc(100% - 200px)
+}
+
+.button__circle.ant-btn-circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+.template {
+  display: flex;
+}
+
+.menu {
+  /*min-height: max(100vh, 100%);*/
+  min-height: 100vh;
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.2);
+  margin-right: 1px;
+  font-size: 18px;
+}
+
+.menu__content {
+  padding: 10px;
+}
+
+.menu svg {
+  height: 20px;
+  min-width: 20px;
+  width: 20px;
+}
+
+.ant-menu-light.ant-menu-root.ant-menu-inline, .ant-menu-light.ant-menu-root.ant-menu-vertical {
+  border-inline-end: none;
+}
+
+.ant-menu-inline.ant-menu-root .ant-menu-item >.ant-menu-title-content {
+  font-size: 16px;
+}
+.ant-menu-light .ant-menu-item {
+  margin-bottom: 15px;
+  display: flex;
+}
+
+.ant-menu-light .ant-menu-item-selected {
+  color: white;
+  background-color: black;
+}
+
+.button__menu {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.content {
+  width: 100%;
+}
