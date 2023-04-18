@@ -1,14 +1,14 @@
 import { useLocation, useNavigate} from "react-router-dom";
 import React, {useEffect, useState} from "react";
-import {Button, Menu, MenuProps} from "antd";
-import { MenuUnfoldOutlined, MenuFoldOutlined, DatabaseOutlined, UserOutlined } from '@ant-design/icons';
+import {Menu, MenuProps} from "antd";
+import { DatabaseOutlined, UserOutlined } from '@ant-design/icons';
 
 
 type MenuItem = Required<MenuProps>['items'][number];
 
 const routesMenu: MenuItem[] = [
     {
-        key: '/dev-by',
+        key: '/resources',
         label: 'Ресурсы',
         icon: <DatabaseOutlined style={{fontSize: '20px'}} />,
     },
@@ -26,12 +26,6 @@ const Sidebar = () => {
 
     console.log('pathname', pathname)
 
-    const [collapsed, setCollapsed] = useState(false);
-
-    const toggleCollapsed = () => {
-        setCollapsed(!collapsed);
-    };
-
     useEffect(() => {
         //@ts-ignore
         routesMenu.forEach(({key}) => {
@@ -41,18 +35,15 @@ const Sidebar = () => {
         })
     }, [pathname])
 
+
     return (
         <div className={'menu'}>
             <div className={'menu__content'}>
-                <Button type={'ghost'} onClick={toggleCollapsed} className={'button__menu'}>
-                    {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-                </Button>
                 <Menu
                     selectedKeys={selectedKeys}
                     mode="inline"
                     //@ts-ignore
                     items={routesMenu}
-                    inlineCollapsed={collapsed}
                     onClick={({key}) => navigate(key)}
                 />
             </div>

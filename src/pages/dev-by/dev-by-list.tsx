@@ -17,7 +17,7 @@ interface DataType {
     _id: string;
 }
 
-export const DevByList = () => {
+const DevByList = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
@@ -96,13 +96,12 @@ export const DevByList = () => {
 
     return (
         <div className={'page'}>
-            <Title level={1}>Devby.io</Title>
+            <Title level={1}>Вакансии devby</Title>
             <div className={!uploadData ? 'page__content' : ''}>
                 <div>
                     <DevByAdd />
                 </div>
                 <div>
-                    <Title level={3}>Данные</Title>
                     <Table pagination={{pageSize: 9}} columns={columns} rowKey={'_id'} dataSource={data} loading={loading}
                            onRow={({ _id }) => ({ onClick: () => navigate( _id) })} />
                 </div>
@@ -111,4 +110,5 @@ export const DevByList = () => {
     );
 }
 
+// @ts-ignore
 export default DevByList;

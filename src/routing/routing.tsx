@@ -3,16 +3,21 @@ import Template from "../pages/template";
 import {useMemo} from "react";
 import DevByList from "../pages/dev-by/dev-by-list";
 import DevByItem from "../pages/dev-by/dev-by-item";
+import Resources from "../pages/resources";
 
 type TRoute = {} & RouteObject
 
 const routes: TRoute[] = [
     {
-        path: '/dev-by',
+        path: '/resources',
+        element: <Resources/>,
+    },
+    {
+        path: '/resources/dev-by',
         element: <DevByList />,
     },
     {
-        path: '/dev-by/:id',
+        path: '/resources/dev-by/:id',
         element: <DevByItem />,
     },
     {

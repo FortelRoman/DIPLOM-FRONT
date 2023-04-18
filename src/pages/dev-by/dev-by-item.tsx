@@ -31,7 +31,7 @@ export const DevByItem = () => {
                 type: "success",
                 message: 'Запись удалена успешно',
             });
-            navigate('/dev-by')
+            navigate('/resources/dev-by')
         } catch (e) {
             notification.open({
                 type: "error",
