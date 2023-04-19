@@ -121,6 +121,7 @@ export const DevByAdd = () => {
                 uploadData && (
                     <>
                         <Title level={3}>Результат выполнения скрипта</Title>
+                        <DevByPreview preview={uploadData?.vacancies}/>
                         <div className={'buttons__save'}>
                             <Button type="primary" onClick={saveResult} icon={<SaveOutlined />}>
                                 Сохранить результат
@@ -128,8 +129,6 @@ export const DevByAdd = () => {
                             <Button onClick={onDownload} shape="circle" icon={<DownloadOutlined />} className={'button__circle'}></Button>
                             <Button onClick={onDelete} shape="circle" icon={<DeleteOutlined />} className={'button__circle'}></Button>
                         </div>
-                        <DevByPreview preview={uploadData?.vacancies}/>
-
                     </>
                 )
             }

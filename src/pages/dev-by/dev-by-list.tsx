@@ -7,6 +7,9 @@ import {useAppDispatch, useAppSelector} from "../../store/hooks";
 import DevByAdd from "./components/dev-by-add";
 import {downloadFile} from "./helpers/download-file";
 import {useNavigate} from "react-router-dom";
+import './dev-by-list.css'
+import {formatDate} from "../../helpers/format-date";
+import DevByIcon from "../../icons/dev-by-icon";
 
 const {Title} = Typography;
 
@@ -63,13 +66,14 @@ const DevByList = () => {
         {
             title: 'Дата',
             dataIndex: 'date',
+            render: value => formatDate(value)
         },
         {
             title: 'Ресурс',
             dataIndex: 'resource',
         },
         {
-            title: 'Количество вакансий',
+            title: 'Количество',
             dataIndex: 'count',
         },
         {
@@ -77,7 +81,7 @@ const DevByList = () => {
             dataIndex: '_id',
             width: 150,
             render: (value) => <>
-                <Button onClick={(e) => {
+                <Button type={'primary'} onClick={(e) => {
                     e.stopPropagation()
                     onDownload(value)
                 }} shape={'circle'} icon={<DownloadOutlined />} className={'button__circle'}/>
@@ -96,7 +100,10 @@ const DevByList = () => {
 
     return (
         <div className={'page'}>
-            <Title level={1}>Вакансии devby</Title>
+            <div className={'page__title'}>
+                <Title level={1}>Вакансии</Title>
+                <DevByIcon />
+            </div>
             <div className={!uploadData ? 'page__content' : ''}>
                 <div>
                     <DevByAdd />

@@ -1,22 +1,17 @@
 import {Outlet} from "react-router-dom";
-import Sidebar from "./sidebar";
 import {Layout} from "antd";
-import {DingtalkOutlined} from "@ant-design/icons";
 import React from "react";
+import PageHeader from "./page-header/page-header";
+import PageSidebar from "./page-sidebar/page-sidebar";
 
-const { Header, Content, Sider } = Layout;
+const { Content } = Layout;
 
 const Template = () => {
     return (
         <Layout>
-            <Header>
-                 <div className={'logo'}>
-                     <DingtalkOutlined />
-                     <span className={'logo__text'}>Parse</span>
-                 </div>
-            </Header>
+           <PageHeader/>
             <Layout hasSider>
-                <Sider collapsible><Sidebar /></Sider>
+                <PageSidebar />
                 <Layout>
                     <Content>
                         <Outlet />

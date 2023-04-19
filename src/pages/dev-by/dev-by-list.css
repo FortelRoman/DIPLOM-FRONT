@@ -1,0 +1,27 @@
+.page__content {
+    display: flex;
+    gap: 50px;
+}
+
+.page__title {
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.page__content > div:first-child {
+    width: 150px;
+}
+.page__content > div:last-child {
+    width: 100%
+}
+
+@media (max-width: 1000px) {
+    .page__content {
+        flex-wrap: wrap;
+    }
+    .page__content > div:first-child {
+        width: 100%;
+    }
+}

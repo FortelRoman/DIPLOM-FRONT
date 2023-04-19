@@ -1,0 +1,71 @@
+.ant-layout .ant-layout-sider {
+    background: #FBFBFB;
+}
+
+.ant-layout-sider-children {
+    width: inherit;
+    position: fixed;
+}
+
+.ant-layout .ant-layout-sider-trigger {
+    background: #EEEEEE;
+    color: black;
+    margin-left: -2px;
+}
+
+.menu {
+    min-height: 100vh;
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.2);
+    margin-right: 1px;
+    font-size: 18px;
+    padding: 25px 15px;
+}
+
+.menu svg {
+    min-width: 25px;
+}
+
+.ant-menu-light {
+    background-color: transparent;
+}
+
+.ant-menu-light.ant-menu-root.ant-menu-inline, .ant-menu-light.ant-menu-root.ant-menu-vertical {
+    border-inline-end: none;
+}
+
+.ant-menu-inline.ant-menu-root .ant-menu-item >.ant-menu-title-content {
+    font-size: 16px;
+}
+.ant-menu-light .ant-menu-item {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.ant-menu-light .ant-menu-item-selected {
+    color: white;
+    background-color: black;
+}
+
+.ant-menu-item:nth-child(2) {
+    margin-bottom: 40px;
+}
+
+.ant-menu-item:nth-child(2) .ant-menu-item-icon {
+    min-width: 50px;
+}
+
+.ant-menu-item:nth-child(2).ant-menu-item-selected {
+    color: black;
+    background-color: #f0f0f0;
+}
+
+.ant-menu-inline-collapsed >.ant-menu-item {
+    padding-inline: 18px!important;
+}
+
+.ant-menu-inline-collapsed >.ant-menu-item:nth-child(2) {
+    padding-inline: 9px!important;
+}
+
+

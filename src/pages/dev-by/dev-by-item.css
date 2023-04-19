@@ -1,0 +1,27 @@
+.item__statistic {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    gap: 30px
+}
+
+@media (max-width: 1000px) {
+    .item__statistic {
+       flex-wrap: wrap;
+    }
+}
+
+.item__statistic .ant-statistic-title {
+    font-size: 18px;
+}
+
+.item__statistic .ant-statistic-content-value {
+    font-size: 28px;
+}
+
+.item__buttons {
+    display: flex;
+    align-items: center;
+    gap: 20px
+}
