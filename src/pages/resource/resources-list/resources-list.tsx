@@ -2,25 +2,19 @@ import React, {useEffect} from 'react';
 import {Button, notification, Table, Typography} from "antd";
 import { DeleteOutlined, DownloadOutlined } from '@ant-design/icons';
 import {ColumnsType} from "antd/es/table";
-import {DevByActions, DevBySelectors} from "../../store/dev-by";
-import {useAppDispatch, useAppSelector} from "../../store/hooks";
-import DevByAdd from "./components/dev-by-add";
-import {downloadFile} from "./helpers/download-file";
+import {DevByActions, DevBySelectors} from "../../../store/resources";
+import {useAppDispatch, useAppSelector} from "../../../store/hooks";
+import ResourceAdd from "../components/resource-add";
+import {downloadFile} from "../../../helpers/download-file";
 import {useNavigate} from "react-router-dom";
-import './dev-by-list.css'
-import {formatDate} from "../../helpers/format-date";
-import DevByIcon from "../../icons/dev-by-icon";
+import './resources-list.css'
+import {formatDate} from "../../../helpers/format-date";
+import DevByIcon from "../../../icons/dev-by-icon";
+import {TResource} from "../../../types/resource";
 
 const {Title} = Typography;
 
-interface DataType {
-    date: string;
-    count: any[];
-    resource: string,
-    _id: string;
-}
-
-const DevByList = () => {
+const ResourcesList = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
@@ -62,7 +56,7 @@ const DevByList = () => {
         }
     }
 
-    const columns: ColumnsType<DataType> = [
+    const columns: ColumnsType<TResource> = [
         {
             title: 'Дата',
             dataIndex: 'date',
@@ -106,7 +100,7 @@ const DevByList = () => {
             </div>
             <div className={!uploadData ? 'page__content' : ''}>
                 <div>
-                    <DevByAdd />
+                    <ResourceAdd />
                 </div>
                 <div>
                     <Table pagination={{pageSize: 9}} columns={columns} rowKey={'_id'} dataSource={data} loading={loading}
@@ -118,4 +112,4 @@ const DevByList = () => {
 }
 
 // @ts-ignore
-export default DevByList;
+export default ResourcesList;

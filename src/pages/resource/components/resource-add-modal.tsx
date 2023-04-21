@@ -1,7 +1,7 @@
 import {DatePicker, Modal, notification, Typography, Upload, UploadFile, UploadProps} from "antd";
 import Dragger from "antd/es/upload/Dragger";
 import React, {FC, useState} from "react";
-import {DevByActions} from "../../../store/dev-by";
+import {DevByActions} from "../../../store/resources";
 import {useAppDispatch} from "../../../store/hooks";
 import {Dayjs} from "dayjs";
 const {Text} = Typography;
@@ -16,7 +16,7 @@ type TData = {
     date: Dayjs | null,
     file: UploadFile | null,
 }
-export const DevByAddModal: FC<Props> = ({isModalOpen, handleOk, handleCancel}) => {
+export const ResourceAddModal: FC<Props> = ({isModalOpen, handleOk, handleCancel}) => {
     const dispatch = useAppDispatch();
     const [data, setData] = useState<TData>({date: null, file: null});
 

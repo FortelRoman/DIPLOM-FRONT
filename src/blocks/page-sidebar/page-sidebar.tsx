@@ -13,13 +13,6 @@ const routesMenu: MenuItem[] = [
         key: '/resources',
         label: 'Ресурсы',
         icon: <DatabaseOutlined style={{fontSize: '25px'}} />,
-        // children: [
-        //     {
-        //         key: '/resources/dev-by',
-        //         label: 'devby',
-        //         icon: <DatabaseOutlined style={{fontSize: '20px'}} />,
-        //     },
-        // ]
     },
     {
         key: '/resources/dev-by',

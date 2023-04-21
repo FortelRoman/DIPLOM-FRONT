@@ -1,31 +1,25 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Typography, notification, Statistic, Spin} from "antd";
 import { DeleteOutlined, DownloadOutlined } from '@ant-design/icons';
-import {DevByActions} from "../../store/dev-by";
-import {useAppDispatch} from "../../store/hooks";
-import {DevByPreview} from "./components/dev-by-preview";
-import {downloadFile} from "./helpers/download-file";
+import {DevByActions} from "../../../store/resources";
+import {useAppDispatch} from "../../../store/hooks";
+import {ResourcePreview} from "../components/resource-preview";
+import {downloadFile} from "../../../helpers/download-file";
 import {useNavigate, useParams} from "react-router-dom";
-import './dev-by-item.css'
-import {formatDate} from "../../helpers/format-date";
-import DevByIcon from "../../icons/dev-by-icon";
+import './resources-item.css'
+import {formatDate} from "../../../helpers/format-date";
+import DevByIcon from "../../../icons/dev-by-icon";
+import {TResourceItem} from "../../../types/resource";
 
 const {Title} = Typography;
 
-interface DataType {
-    date: string;
-    vacancies: any[];
-    resource: string,
-    _id: string;
-}
-
-export const DevByItem = () => {
+export const ResourcesItem = () => {
 
     const dispatch = useAppDispatch();
     const {id} = useParams();
     const navigate = useNavigate();
 
-    const [data, setData] = useState<DataType>()
+    const [data, setData] = useState<TResourceItem>()
 
     const onDelete = async () => {
         try {
@@ -85,7 +79,7 @@ export const DevByItem = () => {
             <Spin spinning={!data}>
                 <div className={'item__statistic'}>
                     <div>
-                        <Statistic title="Количество записей" value={data?.vacancies?.length || '—'} />
+                        <Statistic title="Количество записей" value={data?.records?.length || '—'} />
                     </div>
                     <div>
                         <Statistic title="Дата добавления" value={formatDate(data?.date) || '—'} />
@@ -98,10 +92,10 @@ export const DevByItem = () => {
                         <Button onClick={onDelete} icon={<DeleteOutlined/>}>Удалить</Button>
                     </div>
                 </div>
-                <DevByPreview preview={data?.vacancies}/>
+                <ResourcePreview preview={data?.records}/>
             </Spin>
         </div>
     );
 }
 
-export default DevByItem;
+export default ResourcesItem;

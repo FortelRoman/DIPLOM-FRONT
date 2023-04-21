@@ -1,6 +1,6 @@
 import {Link} from "react-router-dom";
 import {Typography} from "antd";
-import DevByIcon from "../icons/dev-by-icon";
+import DevByIcon from "../../icons/dev-by-icon";
 import React from "react";
 
 const {Title, Text} = Typography;

@@ -3,18 +3,18 @@ import {deleteItem, getItems, parseItem} from "./actions";
 
 export type DevByState = {
 	data: any[];
+	dataLoading: boolean;
 	uploadData: any,
 	uploadDataLoading: boolean,
 	error: string;
-	isLoading: boolean;
 };
 
 const initialState: DevByState = {
 	data: [],
+	dataLoading: false,
 	uploadData: null,
 	uploadDataLoading: false,
 	error: '',
-	isLoading: false,
 };
 
 export const DevBySlice = createSlice({
@@ -27,16 +27,16 @@ export const DevBySlice = createSlice({
 	},
 	extraReducers: {
 		[getItems.fulfilled.type]: (state, action: PayloadAction<any[]>) => {
-			state.isLoading = false;
+			state.dataLoading = false;
 			state.error = '';
 			state.data = action.payload;
 		},
 		[getItems.rejected.type]: (state, action: PayloadAction<string>) => {
 			state.error = action.payload;
-			state.isLoading = false;
+			state.dataLoading = false;
 		},
 		[getItems.pending.type]: (state) => {
-			state.isLoading = true;
+			state.dataLoading = true;
 		},
 
 		[parseItem.fulfilled.type]: (state, action: PayloadAction<any>) => {
@@ -53,15 +53,15 @@ export const DevBySlice = createSlice({
 		},
 
 		[deleteItem.fulfilled.type]: (state) => {
-			state.isLoading = false;
+			state.dataLoading = false;
 			state.error = '';
 		},
 		[deleteItem.rejected.type]: (state, action: PayloadAction<string>) => {
 			state.error = action.payload;
-			state.isLoading = false;
+			state.dataLoading = false;
 		},
 		[deleteItem.pending.type]: (state) => {
-			state.isLoading = true;
+			state.dataLoading = true;
 		},
 	},
 });

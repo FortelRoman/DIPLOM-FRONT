@@ -5,16 +5,16 @@ import {
     Typography,
 } from "antd";
 import { UploadOutlined, DeleteOutlined, DownloadOutlined, SaveOutlined, PlayCircleFilled } from '@ant-design/icons';
-import {DevByActions, DevBySelectors} from "../../../store/dev-by";
+import {DevByActions, DevBySelectors} from "../../../store/resources";
 import {useAppDispatch, useAppSelector} from "../../../store/hooks";
-import {DevByAddModal} from "./dev-by-add-modal";
-import {DevByPreview} from "./dev-by-preview";
-import {downloadFile} from "../helpers/download-file";
+import {ResourceAddModal} from "./resource-add-modal";
+import {ResourcePreview} from "./resource-preview";
+import {downloadFile} from "../../../helpers/download-file";
 import {useNavigate} from "react-router-dom";
 
 const {Title} = Typography;
 
-export const DevByAdd = () => {
+export const ResourceAdd = () => {
     const dispatch = useAppDispatch();
     const uploadData = useAppSelector(DevBySelectors.uploadData)
     const uploadDataLoading = useAppSelector(DevBySelectors.uploadDataLoading)
@@ -121,7 +121,7 @@ export const DevByAdd = () => {
                 uploadData && (
                     <>
                         <Title level={3}>Результат выполнения скрипта</Title>
-                        <DevByPreview preview={uploadData?.vacancies}/>
+                        <ResourcePreview preview={uploadData?.vacancies}/>
                         <div className={'buttons__save'}>
                             <Button type="primary" onClick={saveResult} icon={<SaveOutlined />}>
                                 Сохранить результат
@@ -132,9 +132,9 @@ export const DevByAdd = () => {
                     </>
                 )
             }
-           <DevByAddModal isModalOpen={isModalOpen} handleCancel={handleCancel} handleOk={handleOk}/>
+           <ResourceAddModal isModalOpen={isModalOpen} handleCancel={handleCancel} handleOk={handleOk}/>
         </div>
     );
 }
 
-export default DevByAdd;
+export default ResourceAdd;

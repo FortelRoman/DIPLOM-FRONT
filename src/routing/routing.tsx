@@ -1,9 +1,9 @@
 import {RouteObject, useRoutes} from "react-router-dom";
 import Template from "../pages/template";
 import {useMemo} from "react";
-import DevByList from "../pages/dev-by/dev-by-list";
-import DevByItem from "../pages/dev-by/dev-by-item";
-import Resources from "../pages/resources";
+import ResourcesList from "../pages/resource/resources-list/resources-list";
+import ResourcesItem from "../pages/resource/resources-item/resources-item";
+import Resources from "../pages/resource/resources";
 
 type TRoute = {} & RouteObject
 
@@ -14,11 +14,11 @@ const routes: TRoute[] = [
     },
     {
         path: '/resources/dev-by',
-        element: <DevByList />,
+        element: <ResourcesList />,
     },
     {
         path: '/resources/dev-by/:id',
-        element: <DevByItem />,
+        element: <ResourcesItem />,
     },
     {
         path: '/users',

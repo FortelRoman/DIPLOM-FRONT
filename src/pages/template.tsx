@@ -1,8 +1,8 @@
 import {Outlet} from "react-router-dom";
 import {Layout} from "antd";
 import React from "react";
-import PageHeader from "./page-header/page-header";
-import PageSidebar from "./page-sidebar/page-sidebar";
+import PageHeader from "../blocks/page-header/page-header";
+import PageSidebar from "../blocks/page-sidebar/page-sidebar";
 
 const { Content } = Layout;
 

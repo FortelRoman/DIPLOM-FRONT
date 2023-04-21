@@ -4,7 +4,7 @@ import React, {FC} from "react";
 type TProps = {
     preview?: any[] | null
 }
-export const DevByPreview: FC<TProps> = ({preview}) => {
+export const ResourcePreview: FC<TProps> = ({preview}) => {
     // return <div style={{maxHeight: '800px', overflowY: "auto"}}>
     return <div>
         {
