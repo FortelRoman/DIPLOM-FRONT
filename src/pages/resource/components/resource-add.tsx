@@ -11,6 +11,7 @@ import {ResourceAddModal} from "./resource-add-modal";
 import {ResourcePreview} from "./resource-preview";
 import {downloadFile} from "../../../helpers/download-file";
 import {useNavigate} from "react-router-dom";
+import './resource-add.css'
 
 const {Title} = Typography;
 
@@ -36,7 +37,7 @@ export const ResourceAdd = () => {
                 message: 'Получение данных завершено',
                 description: <><span>Для записи </span>
                     {/*@ts-ignore*/}
-                    <Button type={'link'} onClick={() => navigate('/dev-by')}>данных</Button><span> в БД нажмите на кнопку СОХРАНИТЬ РЕЗУЛЬТАТ'</span></>,
+                    <Button type={'link'} onClick={() => navigate('/resources/dev-by')}>данных</Button><span> в БД нажмите на кнопку СОХРАНИТЬ РЕЗУЛЬТАТ'</span></>,
                 type: 'success',
                 duration: 0,
             });
@@ -61,7 +62,7 @@ export const ResourceAdd = () => {
 
     const onDownload = () => {
         try {
-            downloadFile(JSON.stringify(uploadData?.vacancies), uploadData?.date ||'dev-by.json')
+            downloadFile(JSON.stringify(uploadData?.records), uploadData?.date ||'dev-by.json')
             notification.open({
                 type: "success",
                 message: 'Скачивание выполненно успешно',
@@ -79,7 +80,7 @@ export const ResourceAdd = () => {
     const saveResult = async () => {
         try {
             await dispatch(DevByActions.addItem(
-                {date: uploadData?.date, file: uploadData?.vacancies})).unwrap();
+                {date: uploadData?.date, file: uploadData?.records})).unwrap();
             notification.destroy('parse');
             notification.open({
                 type: 'success',
@@ -109,7 +110,7 @@ export const ResourceAdd = () => {
     };
 
     return (
-        <div>
+        <div className={'resource-add'}>
             <div className={'buttons__add'}>
                 <Button type="primary" onClick={onParse} loading={uploadDataLoading}
                         disabled={uploadDataLoading} icon={<PlayCircleFilled />}>Запустить скрипт</Button>
@@ -121,7 +122,7 @@ export const ResourceAdd = () => {
                 uploadData && (
                     <>
                         <Title level={3}>Результат выполнения скрипта</Title>
-                        <ResourcePreview preview={uploadData?.vacancies}/>
+                        <ResourcePreview preview={uploadData?.records}/>
                         <div className={'buttons__save'}>
                             <Button type="primary" onClick={saveResult} icon={<SaveOutlined />}>
                                 Сохранить результат

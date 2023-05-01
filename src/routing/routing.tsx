@@ -4,6 +4,10 @@ import {useMemo} from "react";
 import ResourcesList from "../pages/resource/resources-list/resources-list";
 import ResourcesItem from "../pages/resource/resources-item/resources-item";
 import Resources from "../pages/resource/resources";
+import Users from "../pages/users/users";
+import LoginPage from "../pages/auth/login";
+import AuthTemplate from "../pages/auth-template";
+import RegisterPage from "../pages/auth/register";
 
 type TRoute = {} & RouteObject
 
@@ -22,8 +26,8 @@ const routes: TRoute[] = [
     },
     {
         path: '/users',
-        element: <div>Users page</div>,
-    }
+        element: <Users/>,
+    },
 ]
 
 const Routing = () => {
@@ -33,9 +37,23 @@ const Routing = () => {
                 path: '/',
                 element: <Template />,
                 children: [
-                    ...routes
+                    ...routes,
                 ],
             },
+            {
+                path: 'auth',
+                element: <AuthTemplate />,
+                children: [
+                    {
+                        path: '/auth/login',
+                        element: <LoginPage />,
+                    },
+                    {
+                        path: '/auth/registration',
+                        element: <RegisterPage />,
+                    },
+                ],
+            }
             // { path: '*', element: <Redirect path={''} /> },
         ];
     }, []);

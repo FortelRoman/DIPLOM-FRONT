@@ -16,6 +16,14 @@ code {
    margin-top: 0;
 }
 
+.page__title {
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
 .ant-layout-content {
   background: white;
 }
@@ -23,20 +31,6 @@ code {
 .field__label {
   display: block;
   margin-bottom: 10px;
-}
-
-.buttons__save {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 15px;
-}
-
-.buttons__add {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 30px;
 }
 
 .resources {
@@ -67,20 +61,6 @@ code {
   color: #333333;
   font-weight: 500;
   /*font-weight: 700;*/
-}
-
-.buttons__add .ant-btn {
-  height: 150px;
-  width: 150px;
-  display: flex;
-  flex-wrap: wrap;
-  white-space: normal;
-  justify-content: center;
-  align-items: center;
-}
-.buttons__add .ant-btn svg {
-  width: 40px;
-  height: 40px;
 }
 
 .page {

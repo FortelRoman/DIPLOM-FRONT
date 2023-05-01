@@ -1,0 +1,57 @@
+.login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 130px;
+}
+
+.login__content {
+    padding: 10px;
+    width: 400px;
+    position: relative;
+    background: #ffffff;
+}
+
+.login__field {
+    margin-bottom: 15px;
+}
+
+.login__field .ant-typography {
+    font-size: 16px;
+    font-weight: 400;
+}
+.login__field .ant-input {
+    margin-top: 5px;
+}
+
+.login__bg--left {
+    position: absolute;
+    left: -500px;
+    top: -30px;
+}
+
+.login__bg--right {
+    position: absolute;
+    right: -500px;
+    top: -30px;
+    transform: scaleX(-1);
+}
+
+.login__title.ant-typography {
+    text-align: center;
+    font-size: 45px;
+    margin-bottom: 50px;
+    font-weight: 900;
+}
+
+.login__buttons {
+    margin-top: 30px;
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.login__buttons .ant-btn-link {
+    padding: 0;
+}

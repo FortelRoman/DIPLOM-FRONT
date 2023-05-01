@@ -41,7 +41,7 @@ const theme: ThemeConfig = {
     token: {
         colorPrimary: Colors.dark1,
         colorPrimaryHover: Colors.dark2,
-        colorError: Colors.coral,
+        // colorError: Colors.coral,
         colorWarning: Colors.lightOrange,
         colorSuccess: Colors.greenYellow,
         colorInfo: Colors.dark2,
@@ -57,15 +57,15 @@ const theme: ThemeConfig = {
         //     lineWidth: 0,
         //     colorBgContainer: Colors.greenYellow,
         // },
-        // Input: {
-        //     colorPrimaryHover: Colors.dark2,
-        //     colorBgContainer: Colors.gray4,
-        //     colorBgContainerDisabled: Colors.gray5,
-        //     colorBorder: 'transparent',
-        //     borderRadius: 8,
-        //     fontSize: 16,
-        //     controlHeight: 48,
-        // },
+        Input: {
+            colorPrimaryHover: Colors.dark2,
+            // colorBgContainer: Colors.gray4,
+            colorBgContainerDisabled: Colors.gray5,
+            // colorBorder: 'transparent',
+            borderRadius: 8,
+            fontSize: 16,
+            controlHeight: 48,
+        },
         // Radio: {
         //     colorPrimary: Colors.green,
         //     colorPrimaryHover: Colors.green,

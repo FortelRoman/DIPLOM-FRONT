@@ -43,7 +43,7 @@ const ResourcesList = () => {
     const onDownload = async (id: string) => {
         try {
             const response = await dispatch(DevByActions.getItem(id)).unwrap()
-            downloadFile(JSON.stringify(response.vacancies), 'dev-by.json')
+            downloadFile(JSON.stringify(response.records, null, '\t'), 'dev-by.json')
             notification.open({
                 type: "success",
                 message: 'Скачивание выполненно успешно',
@@ -68,7 +68,7 @@ const ResourcesList = () => {
         },
         {
             title: 'Количество',
-            dataIndex: 'count',
+            dataIndex: 'records',
         },
         {
             title: 'Действие',

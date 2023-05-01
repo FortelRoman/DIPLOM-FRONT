@@ -3,13 +3,6 @@
     gap: 50px;
 }
 
-.page__title {
-    margin-bottom: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
 .page__content > div:first-child {
     width: 150px;
 }

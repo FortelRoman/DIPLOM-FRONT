@@ -1,0 +1,29 @@
+.resource-add .buttons__add {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.resource-add .buttons__add .ant-btn {
+    height: 150px;
+    width: 150px;
+    display: flex;
+    flex-wrap: wrap;
+    white-space: normal;
+    justify-content: center;
+    align-items: center;
+}
+
+.resource-add .buttons__add .ant-btn svg {
+    width: 40px;
+    height: 40px;
+}
+
+.resource-add .buttons__save {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin: 25px 0;
+}
+

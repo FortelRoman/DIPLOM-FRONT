@@ -5,6 +5,7 @@
 .ant-layout-sider-children {
     width: inherit;
     position: fixed;
+    background: #FBFBFB;
 }
 
 .ant-layout .ant-layout-sider-trigger {
