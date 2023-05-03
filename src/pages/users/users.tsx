@@ -1,40 +1,76 @@
-import {Button} from "antd";
-import {ProfileActions, ProfileSelectors} from "../../store/auth";
+import {Button, notification, Table, Typography} from "antd";
 import {useAppDispatch, useAppSelector} from "../../store/hooks";
-import {useEffect} from "react";
+import React, {useEffect} from "react";
+import {ColumnsType} from "antd/es/table";
+import {TUser} from "../../types/user";
+import {UsersActions, UsersSelectors} from "../../store/users";
+import {DeleteOutlined, UserOutlined} from "@ant-design/icons";
+import RoleSwitch from "./role-switch";
+const {Title} = Typography;
 
 const Users = () => {
     const dispatch = useAppDispatch();
-    const isLogin = useAppSelector(ProfileSelectors.isLogin);
+
+    const data = useAppSelector(UsersSelectors.data)
+    const loading = useAppSelector(UsersSelectors.loading)
+
+    const onDelete = async (id: string) => {
+        try {
+            await dispatch(UsersActions.deleteItem(id)).unwrap()
+            notification.open({
+                type: "success",
+                message: 'Пользователь удален успешно',
+            });
+        } catch (e) {
+            notification.open({
+                type: "error",
+                message: 'Ошибка удаления пользователя',
+            });
+        } finally {
+            await dispatch(UsersActions.getItems())
+        }
+    }
+
+
+    const columns: ColumnsType<TUser> = [
+        {
+            title: 'Пользователь',
+            dataIndex: 'username',
+        },
+        {
+            title: 'Роль',
+            dataIndex: 'role',
+            render: (role, {_id}) => (
+                <RoleSwitch role={role} id={_id}/>
+            )
+        },
+        {
+            title: 'Действие',
+            dataIndex: '_id',
+            width: 150,
+            render: (value) => <>
+                <Button onClick={(e) => {
+                    e.stopPropagation()
+                    onDelete(value)
+                }} shape={'circle'} icon={<DeleteOutlined />} className={'button__circle'} />
+            </>
+        }
+    ];
 
     useEffect(() => {
-        dispatch(ProfileActions.getProfile())
+        dispatch(UsersActions.getItems())
     }, []) // eslint-disable-line
 
-    const onRegister = () => {
-        // $api.post('/api/auth/register', {username: 'roman', password: 'password'})
-    }
-
-    const onLogin = async () => {
-        // const data = await $api.post('/api/auth/login', {username: 'roman', password: 'password'})
-        // localStorage.setItem('access_token', data.data.access_token)
-        dispatch(ProfileActions.login({username: 'roman', password: 'password'}))
-    }
-
-    const onGetCurrentUser = async () => {
-        // const data = await $api.get('/api/auth/profile');
-    }
-
-
     return <>
-        <Button onClick={onRegister}>Register</Button>
-        <Button onClick={onLogin}>Login</Button>
-        <Button onClick={onGetCurrentUser}>Get current user</Button>
-        {/*<Button onClick={onLogout}>Logout</Button>*/}
-        <div>Users page</div>
-        {
-            isLogin ? <div>isLogin</div> : <div>is not login</div>
-        }
+        <div className={'page'}>
+            <div className={'page__title'}>
+                <Title level={1}>Пользователи</Title>
+                <UserOutlined style={{fontSize: '35px'}} />
+            </div>
+            <div>
+                <Table rowKey={'_id'} pagination={{pageSize: 9}} columns={columns} dataSource={data} loading={loading}/>
+            </div>
+        </div>
         </>
 }
 
