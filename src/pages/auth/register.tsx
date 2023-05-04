@@ -7,12 +7,11 @@ import {DingtalkOutlined} from '@ant-design/icons';
 import {ProfileActions, ProfileSelectors} from "../../store/auth";
 import {useAppDispatch, useAppSelector} from "../../store/hooks";
 import React, {useEffect} from "react";
+import {TRegister} from "../../types/user";
 
 const {Text, Title} = Typography;
 
-type TState = {
-    username: string,
-    password: string,
+type TState = TRegister & {
     repeatPassword: string,
 }
 const RegisterPage = () => {
@@ -27,6 +26,7 @@ const RegisterPage = () => {
         mode: 'onTouched',
         defaultValues: {
             username: '',
+            login: '',
             password: '',
             repeatPassword: '',
         },
@@ -50,7 +50,7 @@ const RegisterPage = () => {
 
     const onSubmit = async () => {
         if (isValid) {
-            await dispatch(ProfileActions.register({username: getValues('username'), password: getValues('password')})).unwrap();
+            await dispatch(ProfileActions.register(getValues())).unwrap();
             navigate('/auth/login')
 
         } else {
@@ -72,6 +72,19 @@ const RegisterPage = () => {
                                             main={{
                                                 label: 'Имя пользователя',
                                                 placeholder: 'Введите имя пользователя',
+                                            }}
+                                            control={control}
+                                            rules={{
+                                                required: { message: 'Поле обязательное', value: true },
+                                            }}
+                                        />
+                                    </div>
+                                    <div className={'login__field'}>
+                                        <CustomInput
+                                            name={'login'}
+                                            main={{
+                                                label: 'Логин',
+                                                placeholder: 'Введите логин',
                                             }}
                                             control={control}
                                             rules={{

@@ -5,6 +5,7 @@ import './page-header.css'
 import {useNavigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../store/hooks";
 import {ProfileActions, ProfileSelectors} from "../../store/auth";
+import {ERole} from "../../types/role";
 
 const {Header} = Layout;
 const {Text} = Typography;
@@ -14,15 +15,7 @@ const PageHeader = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const username = useAppSelector(ProfileSelectors.username)
-    const isAdmin = useAppSelector(ProfileSelectors.isAdmin)
-
-    // const getProfile = async () => {
-    //     try {
-    //         await dispatch(ProfileActions.getProfile()).unwrap()
-    //     } catch (e) {
-    //         navigate('/auth/login');
-    //     }
-    // }
+    const role = useAppSelector(ProfileSelectors.role)
 
     const onLogoutClick = () => {
         dispatch(ProfileActions.logout());
@@ -42,7 +35,7 @@ const PageHeader = () => {
                             <Space>
                                 <Text>{username}</Text>
                                 <UserOutlined style={{fontSize: '24px'}} />
-                                <Text>{isAdmin ? 'Администратор' : 'Аналитик'}</Text>
+                                <Text>{ERole[role]}</Text>
                             </Space>
                             <Button type='primary' shape={'circle'} onClick={onLogoutClick}>
                                 <LogoutOutlined style={{fontSize: '24px'}} />

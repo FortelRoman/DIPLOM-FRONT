@@ -1,6 +1,6 @@
-import {RouteObject, useRoutes} from "react-router-dom";
+import {Navigate, useRoutes} from "react-router-dom";
 import Template from "../pages/template";
-import {useMemo} from "react";
+import React, {useMemo} from "react";
 import ResourcesList from "../pages/resource/resources-list/resources-list";
 import ResourcesItem from "../pages/resource/resources-item/resources-item";
 import Resources from "../pages/resource/resources";
@@ -8,27 +8,9 @@ import Users from "../pages/users/users";
 import LoginPage from "../pages/auth/login";
 import AuthTemplate from "../pages/auth-template";
 import RegisterPage from "../pages/auth/register";
-
-type TRoute = {} & RouteObject
-
-const routes: TRoute[] = [
-    {
-        path: '/resources',
-        element: <Resources/>,
-    },
-    {
-        path: '/resources/dev-by',
-        element: <ResourcesList />,
-    },
-    {
-        path: '/resources/dev-by/:id',
-        element: <ResourcesItem />,
-    },
-    {
-        path: '/users',
-        element: <Users/>,
-    },
-]
+import ForbiddenPage from "../pages/errors/forbidden-page";
+import NotFoundPage from "../pages/errors/not-found-page";
+import Profile from "../pages/profile/profile";
 
 const Routing = () => {
     const validateRoutes = useMemo(() => {
@@ -37,7 +19,26 @@ const Routing = () => {
                 path: '/',
                 element: <Template />,
                 children: [
-                    ...routes,
+                    {
+                        path: '/resources',
+                        element: <Resources/>,
+                    },
+                    {
+                        path: '/resources/dev-by',
+                        element: <ResourcesList />,
+                    },
+                    {
+                        path: '/resources/dev-by/:id',
+                        element: <ResourcesItem />,
+                    },
+                    {
+                        path: '/users',
+                        element:  <Users/>,
+                    },
+                    {
+                        path: '/profile',
+                        element:  <Profile/>,
+                    },
                 ],
             },
             {
@@ -52,9 +53,17 @@ const Routing = () => {
                         path: '/auth/registration',
                         element: <RegisterPage />,
                     },
+                    {
+                        path: '/auth/forbidden',
+                        element:  <ForbiddenPage/>,
+                    },
+                    {
+                        path: '/auth/not-found',
+                        element:  <NotFoundPage/>,
+                    },
                 ],
-            }
-            // { path: '*', element: <Redirect path={''} /> },
+            },
+            { path: '*', element: <Navigate to={'/auth/not-found'} /> },
         ];
     }, []);
 

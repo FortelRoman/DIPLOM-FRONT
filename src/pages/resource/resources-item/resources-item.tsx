@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Button, Typography, notification, Statistic, Spin} from "antd";
 import { DeleteOutlined, DownloadOutlined } from '@ant-design/icons';
 import {DevByActions} from "../../../store/resources";
-import {useAppDispatch} from "../../../store/hooks";
+import {useAppDispatch, useAppSelector} from "../../../store/hooks";
 import {ResourcePreview} from "../components/resource-preview";
 import {downloadFile} from "../../../helpers/download-file";
 import {useNavigate, useParams} from "react-router-dom";
@@ -10,6 +10,7 @@ import './resources-item.css'
 import {formatDate} from "../../../helpers/format-date";
 import DevByIcon from "../../../icons/dev-by-icon";
 import {TResourceItem} from "../../../types/resource";
+import { ProfileSelectors } from '../../../store/auth';
 
 const {Title} = Typography;
 
@@ -19,6 +20,8 @@ export const ResourcesItem = () => {
     const {id} = useParams();
     const navigate = useNavigate();
 
+    const isAnalyst = useAppSelector(ProfileSelectors.isAnalyst)
+    const isAdmin = useAppSelector(ProfileSelectors.isAdmin)
     const [data, setData] = useState<TResourceItem>()
 
     const onDelete = async () => {
@@ -89,7 +92,11 @@ export const ResourcesItem = () => {
                     </div>
                     <div className={'item__buttons'}>
                         <Button type={'primary'} onClick={onDownload} icon={<DownloadOutlined/>}>Скачать</Button>
-                        <Button onClick={onDelete} icon={<DeleteOutlined/>}>Удалить</Button>
+                        {
+                            (isAnalyst || isAdmin) && (
+                                <Button onClick={onDelete} icon={<DeleteOutlined/>}>Удалить</Button>
+                            )
+                        }
                     </div>
                 </div>
                 <ResourcePreview preview={data?.records}/>

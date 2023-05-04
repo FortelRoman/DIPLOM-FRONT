@@ -3,6 +3,7 @@ import {Button, notification, Table, Typography} from "antd";
 import { DeleteOutlined, DownloadOutlined } from '@ant-design/icons';
 import {ColumnsType} from "antd/es/table";
 import {DevByActions, DevBySelectors} from "../../../store/resources";
+import {ProfileSelectors} from "../../../store/auth";
 import {useAppDispatch, useAppSelector} from "../../../store/hooks";
 import ResourceAdd from "../components/resource-add";
 import {downloadFile} from "../../../helpers/download-file";
@@ -18,6 +19,8 @@ const ResourcesList = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
+    const isAnalyst = useAppSelector(ProfileSelectors.isAnalyst)
+    const isAdmin = useAppSelector(ProfileSelectors.isAdmin)
     const data = useAppSelector(DevBySelectors.data)
     const uploadData = useAppSelector(DevBySelectors.uploadData)
 
@@ -69,6 +72,7 @@ const ResourcesList = () => {
         {
             title: 'Количество',
             dataIndex: 'records',
+            render: (value) => value?.length,
         },
         {
             title: 'Действие',
@@ -79,10 +83,14 @@ const ResourcesList = () => {
                     e.stopPropagation()
                     onDownload(value)
                 }} shape={'circle'} icon={<DownloadOutlined />} className={'button__circle'}/>
-                <Button onClick={(e) => {
-                    e.stopPropagation()
-                    onDelete(value)
-                }} shape={'circle'} icon={<DeleteOutlined />} className={'button__circle'} />
+                {
+                    (isAnalyst || isAdmin) && (
+                        <Button onClick={(e) => {
+                            e.stopPropagation()
+                            onDelete(value)
+                        }} shape={'circle'} icon={<DeleteOutlined />} className={'button__circle'} />
+                    )
+                }
             </>
         }
     ];
@@ -99,9 +107,13 @@ const ResourcesList = () => {
                 <DevByIcon />
             </div>
             <div className={!uploadData ? 'page__content' : ''}>
-                <div>
-                    <ResourceAdd />
-                </div>
+                {
+                    (isAnalyst || isAdmin) && (
+                        <div>
+                            <ResourceAdd />
+                        </div>
+                    )
+                }
                 <div>
                     <Table pagination={{pageSize: 9}} columns={columns} rowKey={'_id'} dataSource={data} loading={loading}
                            onRow={({ _id }) => ({ onClick: () => navigate( _id) })} />

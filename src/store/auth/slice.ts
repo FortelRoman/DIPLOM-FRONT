@@ -1,9 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {register, login, getProfile} from "./actions";
+import {TRole} from "../../types/role";
 
 type TProfile = {
 	username: string,
-	isAdmin: boolean,
+	role: TRole,
+	login: string,
 }
 
 export type ProfileState = {
@@ -19,25 +21,18 @@ const initialState: ProfileState = {
 	error: '',
 	profile: {
 		username: '',
-		isAdmin: false,
+		role: 'UNKNOWN',
+		login: '',
 	}
 };
 
 export const ProfileSlice = createSlice({
 	name: 'dev-by',
 	initialState,
-	reducers: {
-		logout: (state) => {
-			localStorage.removeItem('access_token')
-			state.isLogin = false;
-			state.profile = initialState.profile;
-		}
-
-	},
+	reducers: {	},
 	extraReducers: {
-		[login.fulfilled.type]: (state, action: PayloadAction<any>) => {
+		[login.fulfilled.type]: (state) => {
 			state.isLoading = false;
-			localStorage.setItem('access_token', action.payload.access_token)
 			state.error = '';
 			state.isLogin = true;
 		},

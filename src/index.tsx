@@ -103,7 +103,7 @@ root.render(
       <Provider store={store}>
           <BrowserRouter>
               <ConfigProvider theme={theme} locale={ruRu}>
-              <Routing/>
+                <Routing/>
               </ConfigProvider>
           </BrowserRouter>
       </Provider>

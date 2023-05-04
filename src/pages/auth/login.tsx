@@ -7,13 +7,10 @@ import {DingtalkOutlined} from '@ant-design/icons';
 import {ProfileActions, ProfileSelectors} from "../../store/auth";
 import {useAppDispatch, useAppSelector} from "../../store/hooks";
 import React from "react";
+import {TLogin} from "../../types/user";
 
 const {Title} = Typography;
 
-type TState = {
-    username: string,
-    password: string,
-}
 const LoginPage = () => {
 
     const navigate = useNavigate();
@@ -22,10 +19,10 @@ const LoginPage = () => {
     // const error = useAppSelector(ProfileSelectors.error)
     const isLoading = useAppSelector(ProfileSelectors.isLoading)
 
-    const methods = useForm<TState>({
+    const methods = useForm<TLogin>({
         mode: 'onTouched',
         defaultValues: {
-            username: '',
+            login: '',
             password: '',
         },
     });
@@ -40,11 +37,11 @@ const LoginPage = () => {
 
     const onSubmit = async () => {
         if (isValid) {
-            await dispatch(ProfileActions.login({username: getValues('username'), password: getValues('password')})).unwrap();
+            await dispatch(ProfileActions.login(getValues())).unwrap();
             navigate('/resources')
 
         } else {
-            setFocus('username');
+            setFocus('login');
         }
     };
 
@@ -58,7 +55,7 @@ const LoginPage = () => {
                                 <form onSubmit={handleSubmit(onSubmit)}>
                                     <div className={'login__field'}>
                                         <CustomInput
-                                            name={'username'}
+                                            name={'login'}
                                             main={{
                                                 label: 'Имя пользователя',
                                                 placeholder: 'Введите имя пользователя',

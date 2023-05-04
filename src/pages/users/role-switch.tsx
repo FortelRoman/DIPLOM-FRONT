@@ -13,7 +13,7 @@ const RoleSwitch: FC<TProps> = ({id, role}) => {
 
     const onUpdateRole = async (id: string, checked: boolean) => {
         try {
-            await dispatch(UsersActions.updateRoleItem({id, role: checked ? "ADMIN" : "ANALYST"}))
+            await dispatch(UsersActions.updateRoleItem({id, role: checked ? "ANALYST" : "USER"}))
             notification.open({
                 type: "success",
                 message: 'Роль изменена успешно',
@@ -30,9 +30,9 @@ const RoleSwitch: FC<TProps> = ({id, role}) => {
 
     return (
         <Space size={20}>
+            Пользователь
+            <Switch defaultChecked={role === 'ANALYST'} onChange={(checked) => onUpdateRole(id, checked)} />
             Аналитик
-            <Switch defaultChecked={role === 'ADMIN'} onChange={(checked) => onUpdateRole(id, checked)} />
-            Администратор
         </Space>
     )
 }

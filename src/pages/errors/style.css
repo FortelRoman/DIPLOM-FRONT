@@ -1,0 +1,52 @@
+.error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 150px;
+}
+
+.error__content {
+    padding: 10px;
+    width: 350px;
+    position: relative;
+    background: #ffffff;
+}
+
+.error__bg--left {
+    position: absolute;
+    left: -350px;
+    top: -70px;
+}
+
+.error__bg--right {
+    position: absolute;
+    right: -350px;
+    top: -70px;
+    transform: scaleX(-1);
+}
+
+.error__title.ant-typography {
+    text-align: center;
+    font-size: 50px;
+    font-weight: 900;
+}
+
+.error__subtitle.ant-typography {
+    text-align: center;
+    font-size: 40px;
+    margin-bottom: 50px;
+    font-weight: 500;
+}
+
+.error__info .ant-typography {
+    display: block;
+    font-size: 20px;
+}
+
+.error__info {
+    text-align: center;
+}
+
+.error__info .ant-btn {
+    margin-top: 40px;
+}
