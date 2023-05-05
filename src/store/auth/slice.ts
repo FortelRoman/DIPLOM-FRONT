@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import {register, login, getProfile} from "./actions";
+import {register, login, getProfile, updateProfile} from "./actions";
 import {TRole} from "../../types/role";
 
 type TProfile = {
@@ -59,9 +59,33 @@ export const ProfileSlice = createSlice({
 		},
 
 		[getProfile.fulfilled.type]: (state, action: PayloadAction<TProfile>) => {
+			state.isLoading = false;
 			state.profile = action.payload;
 			state.isLogin = true;
 		},
+		[getProfile.rejected.type]: (state, action: PayloadAction<string>) => {
+			state.error = action.payload;
+			state.isLoading = false;
+		},
+		[getProfile.pending.type]: (state) => {
+			state.isLoading = true;
+			state.error = '';
+		},
+
+		[updateProfile.fulfilled.type]: (state) => {
+			state.isLoading = false;
+			state.error = '';
+		},
+		[updateProfile.rejected.type]: (state, action: PayloadAction<string>) => {
+			state.error = action.payload;
+			state.isLoading = false;
+		},
+		[updateProfile.pending.type]: (state) => {
+			state.isLoading = true;
+			state.error = '';
+		},
+
+
 
 		// [parseItem.fulfilled.type]: (state, action: PayloadAction<any>) => {
 		// 	state.uploadData = action.payload;

@@ -38,6 +38,22 @@ export const getProfile = createAsyncThunk('auth/profile', async (_, thunkAPI) =
 		const response = await $api.get('/api/auth/profile')
 		return response.data.profile;
 	} catch (error) {
-		return thunkAPI.rejectWithValue(error);
+		// @ts-ignore
+		return thunkAPI.rejectWithValue(error.response.data.msg);
+	}
+});
+
+
+type TUpdate = {
+	username?: string,
+	login?: string,
+}
+export const updateProfile = createAsyncThunk('auth/put', async (data: TUpdate, thunkAPI) => {
+	try {
+		const response = await $api.put('/api/profile', data)
+		return response.data;
+	} catch (error) {
+		// @ts-ignore
+		return thunkAPI.rejectWithValue(error.response.data.msg);
 	}
 });

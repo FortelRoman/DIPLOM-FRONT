@@ -18,3 +18,49 @@
 .profile__buttons {
     margin-bottom: 20px;
 }
+
+
+.profile-field {
+    margin-bottom: 30px;
+}
+
+.profile-field__title {
+    font-size: 18px;
+    color: rgba(0, 0, 0, 0.45);
+    margin-bottom: 4px;
+}
+
+.profile-field__text {
+    font-size: 28px;
+}
+
+.profile-field__edit {
+    padding: 5px;
+}
+
+.profile-field__edit:hover {
+    background-color: rgba(0, 0, 0, 0.06);
+}
+
+.profile-field__save {
+    min-width: 48px!important;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-field__save:hover {
+    background-color: rgba(0, 0, 0, 0.06);
+}
+
+.profile-field__input {
+    margin-top: 10px;
+    display: flex;
+    width: 400px;
+    gap: 20px;
+}
+
+.profile-field__control {
+    width: 100%;
+}
