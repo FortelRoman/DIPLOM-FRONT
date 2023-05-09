@@ -47,6 +47,8 @@ export const getProfile = createAsyncThunk('auth/profile', async (_, thunkAPI) =
 type TUpdate = {
 	username?: string,
 	login?: string,
+	password?: string,
+	oldPassword?: string,
 }
 export const updateProfile = createAsyncThunk('auth/put', async (data: TUpdate, thunkAPI) => {
 	try {

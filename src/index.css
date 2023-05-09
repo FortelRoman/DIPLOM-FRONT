@@ -92,3 +92,11 @@ code {
 .ant-table-wrapper .ant-table {
   overflow-y: auto;
 }
+
+.ant-modal .ant-modal-header {
+  margin-bottom: 20px;
+}
+
+.ant-modal .ant-modal-title {
+  font-size: 20px;
+}

@@ -34,7 +34,9 @@ const PageHeader = () => {
                         <div className={'profile'}>
                             <Space>
                                 <Text>{username}</Text>
-                                <UserOutlined style={{fontSize: '24px'}} />
+                                <Button type={'ghost'} onClick={() => navigate('/profile')}>
+                                    <UserOutlined style={{fontSize: '24px'}} />
+                                </Button>
                                 <Text>{ERole[role]}</Text>
                             </Space>
                             <Button type='primary' shape={'circle'} onClick={onLogoutClick}>

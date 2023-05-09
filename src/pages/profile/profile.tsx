@@ -1,18 +1,19 @@
 import {ProfileActions, ProfileSelectors} from "../../store/auth";
 import {useAppDispatch, useAppSelector} from "../../store/hooks";
-import {Button, notification, Space, Spin, Statistic, Typography} from "antd";
+import {Button, notification, Space, Spin, Typography} from "antd";
 import {UserOutlined, EditOutlined, DeleteOutlined, CheckCircleOutlined} from "@ant-design/icons";
 import React, {useEffect, useState} from "react";
 import {ERole} from "../../types/role";
 import './profile.css'
 import CustomInput from "../../components/CustomInput";
-import {FormProvider, useForm} from "react-hook-form";
+import {useForm} from "react-hook-form";
+import {EditPasswordModal} from "./edit-password-modal";
 const {Title} = Typography;
 
 type TEditState = {
     username: boolean,
     login: boolean,
-
+    password: boolean,
 }
 
 type TUsernameState = {
@@ -27,10 +28,12 @@ const ProfilePage = () => {
     const dispatch = useAppDispatch();
     const {role, username, login} = useAppSelector(ProfileSelectors.profile)
     const isLoading = useAppSelector(ProfileSelectors.isLoading)
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const [edit, setEdit] = useState<TEditState>({
         username: false,
         login: false,
+        password: false,
     });
 
     const onEdit = (field: keyof TEditState) => {
@@ -60,12 +63,12 @@ const ProfilePage = () => {
             await dispatch(ProfileActions.updateProfile(usernameMethods.getValues())).unwrap()
             notification.success({
                 type: "success",
-                message: 'Имя пользователя обновлено',
+                message: 'Имя пользователя успешно изменено',
             });
         } catch (e) {
             notification.open({
                 type: "error",
-                message: 'Ошибка обновления имени пользователя',
+                message: 'Ошибка изменения имени пользователя',
             });
         } finally {
             dispatch(ProfileActions.getProfile());
@@ -78,7 +81,7 @@ const ProfilePage = () => {
             await dispatch(ProfileActions.updateProfile(loginMethods.getValues())).unwrap()
             notification.success({
                 type: "success",
-                message: 'Логин обновлен',
+                message: 'Логин успешно изменен',
             });
             setEdit((prev) => ({...prev, login: false}))
         } catch (e) {
@@ -95,11 +98,15 @@ const ProfilePage = () => {
 
     useEffect(() => {
         usernameMethods.reset({username})
-    }, [username])
+    }, [username]) // eslint-disable-line
 
     useEffect(() => {
         loginMethods.reset({login})
-    }, [login])
+    }, [login]) // eslint-disable-line
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
 
     return <div className={'page'}>
         <div className={'page__title'}>
@@ -107,11 +114,15 @@ const ProfilePage = () => {
             <UserOutlined style={{fontSize: '35px'}} />
         </div>
         <Spin spinning={isLoading}>
-            <Space size={40} className={'profile__buttons'}>
-                {/*<Button type={'primary'} onClick={() => onEdit()} icon={<EditOutlined />}>Редактировать</Button>*/}
-                <Button onClick={onDelete} icon={<DeleteOutlined />}>Удалить</Button>
-            </Space>
-            <FormProvider {...usernameMethods}>
+            <div className={'profile-buttons'}>
+                <div className={'profile-field'}>
+                    <div className={'profile-field__title'}>Роль в систем</div>
+                    <div className={'profile-field__text'}>{ERole[role] || '—'}</div>
+                </div>
+                <Button onClick={() => setIsModalOpen(true)} type={'primary'} icon={<EditOutlined />}>Изменить пароль</Button>
+                <Button onClick={onDelete} icon={<DeleteOutlined />}>Удалить аккаунт</Button>
+            </div>
+            <div className={'profile-fields'}>
                 <div className={'profile-field'}>
                     <Space>
                         <div className={'profile-field__title'}>Имя пользователя</div>
@@ -162,37 +173,11 @@ const ProfilePage = () => {
                         </div>: <div className={'profile-field__text'}>{login || '—'}</div>
                     }
                 </div>
-            </FormProvider>
-            <div className={'profile__statistic'}>
-                <div>
-                    <Statistic title="Роль в системе" value={ERole[role] || '—'} />
-                </div>
             </div>
         </Spin>
-
-
-        {/*<Spin spinning={!data}>*/}
-        {/*    <div className={'item__statistic'}>*/}
-        {/*        <div>*/}
-        {/*            <Statistic title="Количество записей" value={data?.records?.length || '—'} />*/}
-        {/*        </div>*/}
-        {/*        <div>*/}
-        {/*            <Statistic title="Дата добавления" value={formatDate(data?.date) || '—'} />*/}
-        {/*        </div>*/}
-        {/*        <div>*/}
-        {/*            <Statistic title="Ресурс" value={data?.resource || '—'} />*/}
-        {/*        </div>*/}
-        {/*        <div className={'item__buttons'}>*/}
-        {/*            <Button type={'primary'} onClick={onDownload} icon={<DownloadOutlined/>}>Скачать</Button>*/}
-        {/*            {*/}
-        {/*                (isAnalyst || isAdmin) && (*/}
-        {/*                    <Button onClick={onDelete} icon={<DeleteOutlined/>}>Удалить</Button>*/}
-        {/*                )*/}
-        {/*            }*/}
-        {/*        </div>*/}
-        {/*    </div>*/}
-        {/*    <ResourcePreview preview={data?.records}/>*/}
-        {/*</Spin>*/}
+        {
+            isModalOpen && <EditPasswordModal isModalOpen={isModalOpen} handleCancel={handleCancel}/>
+        }
     </div>
 }
 
