@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
-import {Button, notification, Table, Typography} from "antd";
-import { DeleteOutlined, DownloadOutlined } from '@ant-design/icons';
+import {Button, notification, Spin, Table, Tabs, Typography} from "antd";
+import { DeleteOutlined, DownloadOutlined, BorderlessTableOutlined, LineChartOutlined } from '@ant-design/icons';
 import {ColumnsType} from "antd/es/table";
 import {DevByActions, DevBySelectors} from "../../../store/resources";
 import {ProfileSelectors} from "../../../store/auth";
@@ -12,6 +12,8 @@ import './resources-list.css'
 import {formatDate} from "../../../helpers/format-date";
 import DevByIcon from "../../../icons/dev-by-icon";
 import {TResource} from "../../../types/resource";
+import BarComponent from "../../../components/diagramm";
+import TabPane from 'antd/es/tabs/TabPane';
 
 const {Title} = Typography;
 
@@ -115,8 +117,17 @@ const ResourcesList = () => {
                     )
                 }
                 <div>
-                    <Table pagination={{pageSize: 9}} columns={columns} rowKey={'_id'} dataSource={data} loading={loading}
-                           onRow={({ _id }) => ({ onClick: () => navigate( _id) })} />
+                    <Tabs size="large" defaultActiveKey="1" >
+                        <TabPane tab={<span><BorderlessTableOutlined />Таблица</span>} key="1">
+                            <Table pagination={{pageSize: 9}} columns={columns} rowKey={'_id'} dataSource={data} loading={loading}
+                                   onRow={({ _id }) => ({ onClick: () => navigate( _id) })} />
+                        </TabPane>
+                        <TabPane tab={<span><LineChartOutlined />График</span>} key="2">
+                            <Spin spinning={loading}>
+                                <BarComponent titles={data.map(({date}) => formatDate(date) || '')} counts={data.map(({records}) => records.length)} />
+                            </Spin>
+                        </TabPane>
+                    </Tabs>
                 </div>
             </div>
         </div>
