@@ -57,8 +57,9 @@ const LoginPage = () => {
                                         <CustomInput
                                             name={'login'}
                                             main={{
-                                                label: 'Имя пользователя',
-                                                placeholder: 'Введите имя пользователя',
+                                                label: 'Логин',
+                                                placeholder: 'Введите логин',
+                                                autoComplete: 'off',
                                             }}
                                             control={control}
                                             rules={{
@@ -72,7 +73,8 @@ const LoginPage = () => {
                                             main={{
                                                 label: 'Пароль',
                                                 placeholder: 'Введите пароль',
-                                                type: 'password'
+                                                type: 'password',
+                                                autoComplete: 'off',
                                             }}
                                             control={control}
                                             rules={{
