@@ -16,7 +16,6 @@ const LoginPage = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
-    // const error = useAppSelector(ProfileSelectors.error)
     const isLoading = useAppSelector(ProfileSelectors.isLoading)
 
     const methods = useForm<TLogin>({
@@ -31,15 +30,19 @@ const LoginPage = () => {
         formState: { isValid, isSubmitted },
         setFocus,
         control,
-        getValues
+        getValues,
+        setError,
     } = methods;
 
 
     const onSubmit = async () => {
         if (isValid) {
-            await dispatch(ProfileActions.login(getValues())).unwrap();
-            navigate('/resources')
-
+            try {
+                await dispatch(ProfileActions.login(getValues())).unwrap();
+                navigate('/resources')
+            } catch (e) {
+                setError('password', {type: 'custom', message: String(e)})
+            }
         } else {
             setFocus('login');
         }
@@ -82,7 +85,6 @@ const LoginPage = () => {
                                             }}
                                         />
                                     </div>
-                                    {/*<Text type={'danger'}>{error}</Text>*/}
                                     <div className={'login__buttons'}>
                                         <Button
                                             type={'primary'}

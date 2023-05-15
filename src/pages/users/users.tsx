@@ -1,4 +1,4 @@
-import {Button, notification, Table, Typography} from "antd";
+import {Button, notification, Table, Tooltip, Typography} from "antd";
 import {useAppDispatch, useAppSelector} from "../../store/hooks";
 import React, {useEffect} from "react";
 import {ColumnsType} from "antd/es/table";
@@ -49,10 +49,17 @@ const Users = () => {
             dataIndex: '_id',
             width: 150,
             render: (value) => <>
-                <Button onClick={(e) => {
-                    e.stopPropagation()
-                    onDelete(value)
-                }} shape={'circle'} icon={<DeleteOutlined />} className={'button__circle'} />
+                <Tooltip title={'Удалить'}>
+                    <Button
+                        onClick={(e) => {
+                            e.stopPropagation()
+                            onDelete(value)
+                        }}
+                        shape={'circle'}
+                        icon={<DeleteOutlined />}
+                        className={'button__circle'}
+                    />
+                </Tooltip>
             </>
         }
     ];

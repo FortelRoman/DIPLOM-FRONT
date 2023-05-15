@@ -45,8 +45,8 @@ export const ResourcesItem = () => {
     const onDownload = async () => {
         try {
             if (id) {
-                const response = await dispatch(DevByActions.getItem(id))
-                downloadFile(JSON.stringify(response), 'dev-by.json')
+                const response = await dispatch(DevByActions.getItem(id)).unwrap()
+                downloadFile(JSON.stringify(response.records, null, '\t'), 'dev-by.json')
                 notification.open({
                     type: "success",
                     message: 'Скачивание выполненно успешно',

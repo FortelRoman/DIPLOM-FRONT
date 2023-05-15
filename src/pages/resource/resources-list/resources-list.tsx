@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Button, notification, Spin, Table, Tabs, Typography} from "antd";
+import {Button, notification, Spin, Table, Tabs, Tooltip, Typography} from "antd";
 import { DeleteOutlined, DownloadOutlined, BorderlessTableOutlined, LineChartOutlined } from '@ant-design/icons';
 import {ColumnsType} from "antd/es/table";
 import {DevByActions, DevBySelectors} from "../../../store/resources";
@@ -81,16 +81,31 @@ const ResourcesList = () => {
             dataIndex: '_id',
             width: 150,
             render: (value) => <>
-                <Button type={'primary'} onClick={(e) => {
-                    e.stopPropagation()
-                    onDownload(value)
-                }} shape={'circle'} icon={<DownloadOutlined />} className={'button__circle'}/>
+                <Tooltip title={'Скачать'}>
+                    <Button
+                        type={'primary'}
+                        onClick={(e) => {
+                            e.stopPropagation()
+                            onDownload(value)
+                         }}
+                        shape={'circle'}
+                        icon={<DownloadOutlined />}
+                        className={'button__circle'}
+                    />
+                </Tooltip>
                 {
                     (isAnalyst || isAdmin) && (
-                        <Button onClick={(e) => {
-                            e.stopPropagation()
-                            onDelete(value)
-                        }} shape={'circle'} icon={<DeleteOutlined />} className={'button__circle'} />
+                        <Tooltip title={'Удалить'}>
+                            <Button
+                                onClick={(e) => {
+                                    e.stopPropagation()
+                                    onDelete(value)
+                                }}
+                                shape={'circle'}
+                                icon={<DeleteOutlined />}
+                                className={'button__circle'}
+                            />
+                        </Tooltip>
                     )
                 }
             </>

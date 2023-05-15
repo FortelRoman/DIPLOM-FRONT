@@ -9,7 +9,7 @@ import {useAppDispatch, useAppSelector} from "../../store/hooks";
 import React, {useEffect} from "react";
 import {TRegister} from "../../types/user";
 
-const {Text, Title} = Typography;
+const {Title} = Typography;
 
 type TState = TRegister & {
     repeatPassword: string,
@@ -19,7 +19,6 @@ const RegisterPage = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
-    const error = useAppSelector(ProfileSelectors.error)
     const isLoading = useAppSelector(ProfileSelectors.isLoading)
 
     const methods = useForm<TState>({
@@ -38,7 +37,8 @@ const RegisterPage = () => {
         control,
         getValues,
         trigger,
-        watch
+        watch,
+        setError,
     } = methods;
 
     useEffect(() => {
@@ -50,9 +50,12 @@ const RegisterPage = () => {
 
     const onSubmit = async () => {
         if (isValid) {
-            await dispatch(ProfileActions.register(getValues())).unwrap();
-            navigate('/auth/login')
-
+            try {
+                await dispatch(ProfileActions.register(getValues())).unwrap();
+                navigate('/auth/login')
+            } catch (e) {
+                setError('login', {type: 'custom', message: String(e)})
+            }
         } else {
             setFocus('username');
         }
@@ -125,7 +128,6 @@ const RegisterPage = () => {
                                             }}
                                         />
                                     </div>
-                                    <Text type={'danger'}>{error}</Text>
                                     <div className={'login__buttons'}>
                                         <Button
                                             type={'primary'}
