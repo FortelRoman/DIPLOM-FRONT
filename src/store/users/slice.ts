@@ -1,15 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {deleteItem, getItems} from "./actions";
-import {TUser} from "../../types/user";
+import {TUsersData} from "../../types/user";
 
 export type UsersState = {
-	data: TUser[];
+	data: TUsersData;
 	loading: boolean;
 	error: string;
 };
 
 const initialState: UsersState = {
-	data: [],
+	data: {},
 	loading: false,
 	error: '',
 };
@@ -19,7 +19,7 @@ export const UsersSlice = createSlice({
 	initialState,
 	reducers: {	},
 	extraReducers: {
-		[getItems.fulfilled.type]: (state, action: PayloadAction<any[]>) => {
+		[getItems.fulfilled.type]: (state, action: PayloadAction<TUsersData>) => {
 			state.loading = false;
 			state.error = '';
 			state.data = action.payload;

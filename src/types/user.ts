@@ -1,5 +1,13 @@
 import { TRole } from "./role"
 
+export type TUsersData = {
+    usersCount?: number,
+    analystCount?: number,
+    adminCount?: number,
+    totalCount?: number,
+    users?: TUser[],
+}
+
 export type TUser = {
     username: string,
     role: TRole,

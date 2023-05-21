@@ -12,11 +12,11 @@
     }
 }
 
-.item__statistic .ant-statistic-title {
+.ant-statistic .ant-statistic-title {
     font-size: 18px;
 }
 
-.item__statistic .ant-statistic-content-value {
+.ant-statistic .ant-statistic-content-value {
     font-size: 28px;
 }
 
