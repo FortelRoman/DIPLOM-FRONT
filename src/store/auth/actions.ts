@@ -43,6 +43,16 @@ export const getProfile = createAsyncThunk('auth/profile', async (_, thunkAPI) =
 	}
 });
 
+export const deleteProfile = createAsyncThunk('auth/profile', async (_, thunkAPI) => {
+	try {
+		const response = await $api.delete('/api/auth/profile')
+		return response.data.profile;
+	} catch (error) {
+		// @ts-ignore
+		return thunkAPI.rejectWithValue(error.response.data.msg);
+	}
+});
+
 
 type TUpdate = {
 	username?: string,

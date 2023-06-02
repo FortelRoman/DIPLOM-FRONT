@@ -99,7 +99,7 @@ const theme: ThemeConfig = {
 
 
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
       <Provider store={store}>
           <BrowserRouter>
               <ConfigProvider theme={theme} locale={ruRu}>
@@ -107,5 +107,5 @@ root.render(
               </ConfigProvider>
           </BrowserRouter>
       </Provider>
-  </React.StrictMode>
+  // </React.StrictMode>
 );

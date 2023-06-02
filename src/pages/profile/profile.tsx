@@ -8,6 +8,7 @@ import './profile.css'
 import CustomInput from "../../components/CustomInput";
 import {useForm} from "react-hook-form";
 import {EditPasswordModal} from "./edit-password-modal";
+import {useNavigate} from "react-router-dom";
 const {Title} = Typography;
 
 type TEditState = {
@@ -29,6 +30,7 @@ const ProfilePage = () => {
     const {role, username, login} = useAppSelector(ProfileSelectors.profile)
     const isLoading = useAppSelector(ProfileSelectors.isLoading)
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const navigate = useNavigate();
 
     const [edit, setEdit] = useState<TEditState>({
         username: false,
@@ -40,8 +42,10 @@ const ProfilePage = () => {
         setEdit((prev) => ({...prev, [field]: !prev[field]}))
     }
 
-    const onDelete = () => {
-
+    const onDelete = async () => {
+        navigate('/auth/login')
+        await dispatch(ProfileActions.deleteProfile()).unwrap();
+        await dispatch(ProfileActions.logout()).unwrap();
     }
 
     const usernameMethods = useForm<TUsernameState>({

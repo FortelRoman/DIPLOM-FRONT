@@ -59,6 +59,10 @@ const PageSidebar = () => {
         })
     }, [pathname, routesMenu])
 
+    useEffect(() => {
+        pathname === '/' && navigate('/resources')
+    }, [pathname])
+
 
     return (
         <Sider collapsible width={300} collapsedWidth={100} >

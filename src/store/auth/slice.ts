@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import {register, login, getProfile, updateProfile} from "./actions";
+import {register, login, getProfile, updateProfile, logout} from "./actions";
 import {TRole} from "../../types/role";
 
 type TProfile = {
@@ -85,31 +85,18 @@ export const ProfileSlice = createSlice({
 			state.error = '';
 		},
 
-
-
-		// [parseItem.fulfilled.type]: (state, action: PayloadAction<any>) => {
-		// 	state.uploadData = action.payload;
-		// 	state.uploadDataLoading = false;
-		// 	state.error = '';
-		// },
-		// [parseItem.rejected.type]: (state, action: PayloadAction<string>) => {
-		// 	state.error = action.payload;
-		// 	state.uploadDataLoading = false;
-		// },
-		// [parseItem.pending.type]: (state) => {
-		// 	state.uploadDataLoading = true;
-		// },
-		//
-		// [deleteItem.fulfilled.type]: (state) => {
-		// 	state.dataLoading = false;
-		// 	state.error = '';
-		// },
-		// [deleteItem.rejected.type]: (state, action: PayloadAction<string>) => {
-		// 	state.error = action.payload;
-		// 	state.dataLoading = false;
-		// },
-		// [deleteItem.pending.type]: (state) => {
-		// 	state.dataLoading = true;
-		// },
+		[logout.fulfilled.type]: (state) => {
+			state.isLoading = false;
+			state.error = '';
+			state.profile = initialState.profile;
+		},
+		[logout.rejected.type]: (state, action: PayloadAction<string>) => {
+			state.error = action.payload;
+			state.isLoading = false;
+		},
+		[logout.pending.type]: (state) => {
+			state.isLoading = true;
+			state.error = '';
+		},
 	},
 });

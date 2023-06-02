@@ -2,7 +2,7 @@ import React from "react";
 import {Button, Layout, Tooltip, Typography} from "antd";
 import {DingtalkOutlined, UserOutlined, LogoutOutlined} from '@ant-design/icons';
 import './page-header.css'
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../store/hooks";
 import {ProfileActions, ProfileSelectors} from "../../store/auth";
 import {ERole} from "../../types/role";
@@ -24,10 +24,12 @@ const PageHeader = () => {
     return (
         <Header>
             <div className={'page__header'}>
-                <div className={'logo'}>
-                    <DingtalkOutlined />
-                    <span className={'logo__text'}>Parse</span>
-                </div>
+                <Link to={'/'}>
+                    <div className={'logo'}>
+                        <DingtalkOutlined />
+                        <span className={'logo__text'}>Parse</span>
+                    </div>
+                </Link>
                 {
                     username && (
                         <div className={'profile'}>

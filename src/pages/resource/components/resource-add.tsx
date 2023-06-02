@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {
     Button,
     notification,
+    Tooltip,
     Typography,
 } from "antd";
 import { UploadOutlined, DeleteOutlined, DownloadOutlined, SaveOutlined, PlayCircleFilled } from '@ant-design/icons';
@@ -62,7 +63,7 @@ export const ResourceAdd = () => {
 
     const onDownload = () => {
         try {
-            downloadFile(JSON.stringify(uploadData?.records), uploadData?.date ||'dev-by.json')
+            downloadFile(JSON.stringify(uploadData?.records, null, '\t'), uploadData?.date ||'dev-by.json')
             notification.open({
                 type: "success",
                 message: 'Скачивание выполненно успешно',
@@ -127,8 +128,12 @@ export const ResourceAdd = () => {
                             <Button type="primary" onClick={saveResult} icon={<SaveOutlined />}>
                                 Сохранить результат
                             </Button>
-                            <Button onClick={onDownload} shape="circle" icon={<DownloadOutlined />} className={'button__circle'}></Button>
-                            <Button onClick={onDelete} shape="circle" icon={<DeleteOutlined />} className={'button__circle'}></Button>
+                            <Tooltip title={'Скачать'}>
+                                <Button type={'primary'} onClick={onDownload} shape="circle" icon={<DownloadOutlined />} className={'button__circle'}></Button>
+                            </Tooltip>
+                            <Tooltip title={'Удалить'}>
+                                <Button onClick={onDelete} shape="circle" icon={<DeleteOutlined />} className={'button__circle'}></Button>
+                            </Tooltip>
                         </div>
                     </>
                 )
