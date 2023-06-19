@@ -27,6 +27,7 @@ const CustomInput: FC<Props> = ({ main, ...props }) => {
                 disabled={disabled}
                 {...rest}
                 {...field}
+                autoComplete={rest.autoComplete}
             />
             {
                 errorField.errorText && <Text type={'danger'}>{errorField.errorText}</Text>

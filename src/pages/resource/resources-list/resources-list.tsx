@@ -116,6 +116,7 @@ const ResourcesList = () => {
         dispatch(DevByActions.getItems())
     }, []) // eslint-disable-line
 
+    const reverseData = (JSON.parse(JSON.stringify(data)) as any[]).reverse();
 
     return (
         <div className={'page'}>
@@ -134,12 +135,12 @@ const ResourcesList = () => {
                 <div>
                     <Tabs size="large" defaultActiveKey="1" >
                         <TabPane tab={<span><BorderlessTableOutlined />Таблица</span>} key="1">
-                            <Table pagination={{pageSize: 9}} columns={columns} rowKey={'_id'} dataSource={data} loading={loading}
+                            <Table pagination={{pageSize: 5}} columns={columns} rowKey={'_id'} dataSource={data} loading={loading}
                                    onRow={({ _id }) => ({ onClick: () => navigate( _id) })} />
                         </TabPane>
                         <TabPane tab={<span><LineChartOutlined />График</span>} key="2">
                             <Spin spinning={loading}>
-                                <BarComponent titles={data.map(({date}) => formatDate(date) || '')} counts={data.map(({records}) => records.length)} />
+                                <BarComponent titles={reverseData.map(({date}) => formatDate(date) || '')} counts={reverseData.map(({records}) => records.length)} />
                             </Spin>
                         </TabPane>
                     </Tabs>
